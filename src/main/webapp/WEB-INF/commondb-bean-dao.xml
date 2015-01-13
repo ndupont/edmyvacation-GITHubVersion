@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+							http://www.springframework.org/schema/tx
+							http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+		
+	<!-- Data source definition for MySQL Driver -->
+	<bean id="commondbDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+         
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/common-myvacation" />
+
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- Hibernate SessionFactory Bean Definition -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		
+		<property name="dataSource">
+			<ref local="commondbDataSource" />
+		</property>
+
+		<property name="configLocation" value="classpath:commondb.hibernate.cfg.xml" />
+
+		<property name="hibernateProperties">
+			<props>
+				<!--
+					The classname of a Hibernate org.hibernate.dialect.Dialect which
+					allows Hibernate to generate SQL optimized for a particular
+					relational database.
+				-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+
+				<!--
+					Write all SQL statements to console. This is an alternative to
+					setting the log category org.hibernate.SQL to debug.
+				-->
+				<prop key="hibernate.show_sql">false</prop>
+
+				<!-- Pretty print the SQL in the log and console. -->
+				<prop key="hibernate.format_sql">false</prop>
+
+				<!--
+					Sets a maximum "depth" for the outer join fetch tree for
+					single-ended associations (one-to-one, many-to-one). A 0 disables
+					default outer join fetching. recommended values between 0 and 3
+				-->
+				<prop key="hibernate.max_fetch_depth">2</prop>
+
+				<!--
+					Sets a default size for Hibernate batch fetching of
+					associations.recommended values 4, 8, 16
+				-->
+				<prop key="hibernate.jdbc.batch_size">16</prop>
+
+				<!--
+					If enabled, Hibernate will collect statistics useful for
+					performance tuning. true | false
+				-->
+				<prop key="hibernate.generate_statistics">true</prop>
+
+				<!--
+					If turned on, Hibernate will generate comments inside the SQL, for
+					easier debugging, defaults to false.
+				-->
+				<prop key="hibernate.use_sql_comments">true</prop>
+
+				<!--
+					If enabled, generated identifier properties will be reset to
+					default values when objects are deleted. true | false
+				-->
+				<prop key="hibernate.use_identifier_rollback">true</prop>
+
+				<!--
+					A non-zero value determines the JDBC fetch size (calls
+					Statement.setFetchSize()).
+				-->
+				<prop key="hibernate.jdbc.fetch_size">20</prop>
+
+				<!--
+					A non-zero value enables use of JDBC2 batch updates by Hibernate.
+					recommended values between 5 and 30
+				-->
+				<prop key="hibernate.default_batch_fetch_size">30</prop>
+
+				<!--
+					Set this property to true if your JDBC driver returns correct row
+					counts from executeBatch(). It is usually safe to turn this option
+					on. Hibernate will then use batched DML for automatically versioned
+					data. Defaults to false.
+				-->
+				<prop key="hibernate.jdbc.batch_versioned_data">true</prop>
+
+				<!--
+					Optimizes second-level cache operation to minimize writes, at the
+					cost of more frequent reads. This setting is most useful for
+					clustered caches and, in Hibernate3, is enabled by default for
+					clustered cache implementations. true|false
+				-->
+				<prop key="hibernate.cache.use_minimal_puts">false</prop>
+
+				<!--
+					Enables the query cache. Individual queries still have to be set
+					cachable. true|false
+				-->
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+
+				<!--
+					Can be used to completely disable the second level cache, which is
+					enabled by default for classes which specify a <cache> mapping.
+					true|false
+				-->
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+
+				<!-- Log all SQL DML statements as they are executed -->
+				<prop key="org.hibernate.SQL">error</prop>
+
+				<!-- Log all JDBC parameters -->
+				<prop key="org.hibernate.type">error</prop>
+
+				<!-- Log all SQL DDL statements as they are executed -->
+				<prop key="org.hibernate.tool.hbm2ddl">error</prop>
+
+				<!--
+					Log the state of all entities (max 20 entities) associated with the
+					session at flush time
+				-->
+				<prop key="org.hibernate.pretty">error</prop>
+
+				<!-- Log all second-level cache activity -->
+				<prop key="org.hibernate.cache">error</prop>
+
+				<!-- Log transaction related activity -->
+				<prop key="org.hibernate.transaction">error</prop>
+
+				<!-- Log all JDBC resource acquisition -->
+				<prop key="org.hibernate.jdbc">error</prop>
+
+				<!-- Log HQL and SQL ASTs during query parsing -->
+				<prop key="org.hibernate.hql.ast.AST">error</prop>
+
+				<prop key="hbm2ddl.auto">none</prop>
+
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- Hibernate transaction manager bean -->	
+
+<!-- 	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+ 
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+ -->  
+       <!--
+ 	<beans:bean id="commondbTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="commondbSessionFactory" />
+		<beans:qualifier value="commondbTransactionManager"/>
+	</beans:bean>
+    -->
+    
+     
+    <!-- Applies persistence exception translation to DAO's annotated with @Repository using AOP -->       
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+ 
+   
+</beans> 

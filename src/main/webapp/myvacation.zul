@@ -1,0 +1,159 @@
+<?page title="My Vacation" ?>
+<?init class="com.ellisdon.portal.mv.controller.VacationPortletInitiator" ?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk>
+  <window id="winVacation" title="My Vacation" width="685px" height="680px" border="normal"
+          apply="com.ellisdon.portal.mv.controller.MyVacationController">
+     
+  <vlayout spacing="5px">
+    <hbox spacing="5px" style="margin-top:3px; margin-left:5px">
+    
+      <!-- Entitlement Section -->
+      <groupbox width="305px" height="100px">
+        <caption label="Entitlement" style="font-size:12px;font-weight:bold;"/>      
+ 					<vbox id="entView" style="margin-top:1px; margin-left:10px" apply="com.ellisdon.portal.mv.controller.VacationEntitelmentViewControllor">
+					     <div>
+					        <label style="font-size:12px;font-weight:bold;" value="Yearly Entitlement : "/>
+			                <listbox id="listEntDays" rows="1" mold="select" style="font-size:12px">
+			                    <listitem label="15" value="15" />
+			                    <listitem label="20" value="20" />
+			                    <listitem label="25" value="25" />
+			                    <listitem label="30" value="30" />
+			                    <listitem label="35" value="35" />			                    		       
+			                </listbox>	        
+			                <label style="font-size:12px;" value="Days"/>			                			                
+					     </div>
+					     <div style="margin-top:10px">			             
+							     <label style="font-size:12px;" value="Last Updated : "/>
+							     <label id="lbEntUpdate" style="font-size:12px;" value=""/>
+					     </div>
+					     <div>					     
+					       <button id="btnEntUpdate" label="Save Entitlement"/>
+					     </div>
+					</vbox>
+     </groupbox>
+
+     <separator spacing="5px" /> 
+ 
+     <!-- HR Notice Section -->
+     <groupbox width="295px" height="100px">
+        <caption label="HR Notice" style="font-size:12px;font-weight:bold;"/>  
+     		
+                <vbox id="hrNoticeView" style="margin-top:3px; margin-left:12px">
+                    <!-- 
+					<hbox>
+					     <div>
+							<label style="font-size:12px;font-weight:bold;" value="Balance to Date : "/>
+							<style dynamic="true">
+								.mylbl {
+								border: 1px solid black;
+								padding-left:10px;
+							    padding-right:10px;							    												
+							 }
+							 </style>
+							<label sclass="mylbl" id="lblBalanceDays" style="font-size:12px;font-weight:bold;color:red;" width="30px" value="10" />							
+							<label style="font-size:12px;" value="Days"/>
+					     </div>
+					</hbox>
+					
+                    <hbox style="margin-top:10px">
+					     <div>
+							<label style="font-size:12px;" value="As of  2010-Jan-01 you had "/>
+							<style dynamic="true">
+								.mylbl {
+								border: 1px solid black;
+								padding-left:10px;
+							    padding-right:10px;							    												
+							 }
+							 </style>
+							<label sclass="mylbl" id="lblCarryForwardDays" style="font-size:12px;font-weight:bold;color:red;" width="30px" value="0" />							
+							<label style="font-size:12px;" value=" days vacation carried forward. This vacation needs to be taken by"/>
+					     </div>	
+					</hbox>
+					<label style="font-size:12px;" value="2012-Jul-01."/>
+      				-->
+				</vbox>	
+
+      </groupbox>
+      
+    </hbox>
+    
+     <!-- Vacation Entry Section -->
+     <groupbox id="vacEntry" width="640px" height="190px" style="margin-top:5px; margin-left:5px" apply="com.ellisdon.portal.mv.controller.VacationEntryViewController">
+        <caption label="Take Vacation" style="font-size:12px;font-weight:bold;"/>  
+         <div style="margin-top:3px" >
+         <grid fixedLayout="true">
+	       <columns>
+		     <column label="Type" width="150px" />
+		     <column label="Content" />
+	       </columns>
+	       <rows>
+		     <row>
+			   <label value="From" width="150px" />
+               <datebox id="fromDate" cols="16" format="yyyy-MM-dd"  constraint="no empty"/>
+		    </row>
+
+		     <row>
+			   <label value="To" width="150px" />
+               <datebox id="toDate" cols="16" format="yyyy-MM-dd" constraint="no empty"/>
+		    </row>
+
+		     <row>
+			   <label value="Days Taken" width="150px" />
+			   <hbox>
+			   <div>
+			     <spinner id="daysTaken" value="1" constraint="no negative, no empty" />				 
+				 <checkbox id="halfDayCheck" label=" add half day"/>
+			   </div>
+			   </hbox>
+		    </row>
+
+		     <row>
+			   <label value="Comments" width="150px" />			   
+			   <textbox id="comments" value="" width="350px" maxlength="45" />
+		    </row>
+		   </rows>      
+		 </grid>
+		 </div>
+		 
+        <div id="UpdateClear" style="padding-top:10px"> 
+         <hbox>
+           	<div >
+			   <button id="save" label="Save" width="100px"/>
+			   <button id="reset" label="Reset" style="margin-left:3px" width="100px"/>
+			</div> 
+         </hbox>
+       </div>
+     </groupbox>
+       
+     <!-- Vacation History Section -->
+     <groupbox width="640px" height="240px" style="margin-top:5px; margin-left:5px">
+        <caption label="Vacation History" style="font-size:12px;font-weight:bold;"/>
+           <div id="divVacHistory"  style="margin-top:3px" apply="com.ellisdon.portal.mv.controller.VacationHistoryViewController">  
+              	<grid id="gridVacHistory" fixedLayout="true" height="210px">
+					<columns>
+					    <column label="From" width="80px"/>
+                        <column label="To" width="80px"/>
+						<column label="Days Taken" width="75px" align="center"/>
+						<column label="Not Taken" width="70px" align="center"/>
+						<column label="Comments" width="215px"/>
+						<column label="Action" width="90px" align="center"/>					    
+					</columns>
+				</grid>
+				</div>
+         </groupbox>
+   </vlayout>
+   
+   <hbox spacing="5px" style="margin-top:3px; margin-left:5px">
+	   <div style="margin-top:3px;">
+	       <button id="signoutBtn" label="Sign out" style="margin-left:3px" width="100px"/>
+	   </div>
+	
+	   <div style="margin-top:3px;">
+	       <button id="memStatsBtn" label="Memory Stats" style="margin-left:3px" width="100px"/>
+	   </div>
+   </hbox>
+ 
+   
+   </window>
+</zk>

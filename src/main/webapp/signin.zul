@@ -1,0 +1,20 @@
+<?page title="ZK Store - Login"?>
+<window id="loginWin" border="normal" width="300px"
+    title="MyVacation - Login"
+    apply="com.ellisdon.portal.mv.controller.LoginViewController">
+     
+    <grid>
+        <rows>
+            <row> Email Address: <textbox id="email"/></row>
+            <row> Password:<textbox id="passwrd"  type="password"/></row>
+        </rows>
+    </grid>
+    <vbox>
+     <div>
+       <button id="loginBtn" label="Sign In" width="100px"/>
+       <button id="clearBtn" label="Reset" style="margin-left:3px" width="100px"/>
+     </div>
+     <label id="lbmsg" style="margin-left:5px;color:red;font-weight:bold;"/>
+    </vbox>
+</window>
+
