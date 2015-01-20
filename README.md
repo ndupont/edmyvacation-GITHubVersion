@@ -1,3 +1,3 @@
 # edmyvacation-GITHubVersion
 
-This is README for MyVacation
+This is README for MyVacation Application
